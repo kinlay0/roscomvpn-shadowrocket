@@ -141,6 +141,13 @@ TAILSCALE_DIRECT_RULES = [
     "DOMAIN-SUFFIX,tailscale.com,DIRECT",
 ]
 
+RU_TLD_DIRECT_RULES = [
+    "DOMAIN-SUFFIX,ru,DIRECT",
+    "DOMAIN-SUFFIX,su,DIRECT",
+    "DOMAIN-SUFFIX,by,DIRECT",
+    "DOMAIN-SUFFIX,xn--p1ai,DIRECT",  # .рф
+]
+
 EARLY_PROXY_DOMAINS = [
     # Some domains must be forced before private-ips because Shadowrocket fake-IP answers
     # use 198.18.0.0/15, which is otherwise bypassed by private-ips.list.
@@ -497,6 +504,9 @@ update-url = {CONF_URL}
     rule_lines.append("# ── GEOIP: fallback для РФ/BY адресов вне списков ──")
     rule_lines.append("GEOIP,RU,DIRECT")
     rule_lines.append("GEOIP,BY,DIRECT")
+    rule_lines.append("")
+    rule_lines.append("# ── RU/BY TLD: DIRECT по суффиксу, без DNS-резолва ──")
+    rule_lines.extend(RU_TLD_DIRECT_RULES)
     rule_lines.append("")
     rule_lines.append("FINAL,PROXY")
     rule_lines.append("")
